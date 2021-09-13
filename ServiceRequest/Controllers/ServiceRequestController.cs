@@ -1,6 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using ServiceRequest.DataModel;
 using ServiceRequest.Services.Interfaces;
+using ServiceRequest.ViewModels;
 
 namespace ServiceRequest.Controllers
 {
@@ -9,10 +14,12 @@ namespace ServiceRequest.Controllers
     public class ServiceRequestController : ControllerBase
     {
         private readonly IServiceRequestService _serviceRequestService;
+        private readonly IMapper _mapper;
 
-        public ServiceRequestController(IServiceRequestService serviceRequestService)
+        public ServiceRequestController(IServiceRequestService serviceRequestService, IMapper mapper)
         {
             _serviceRequestService = serviceRequestService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -20,13 +27,17 @@ namespace ServiceRequest.Controllers
         {
             var requestService = _serviceRequestService.GetAll();
             if (requestService.Any())
-                return Ok(requestService);
+                return Ok(_mapper.Map<IList<ServiceRequestModel>, IList<ServiceRequestModelResponse>>(requestService));
             return NoContent();
         }
 
         [HttpGet]
-        public IActionResult Get(long serviceRequestId)
+        [Route("{id}")]
+        public IActionResult Get(Guid serviceRequestId)
         {
+            var requestService = _serviceRequestService.GetById(serviceRequestId);
+            if (requestService != null)
+                return Ok(_mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(requestService));
             return NotFound();
         }
     }

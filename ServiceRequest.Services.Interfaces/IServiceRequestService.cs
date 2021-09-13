@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ServiceRequest.DataModel;
 
 namespace ServiceRequest.Services.Interfaces
 {
     public interface IServiceRequestService
     {
-        IList<string> GetAll();
+        IList<ServiceRequestModel> GetAll();
+        ServiceRequestModel GetById(Guid serviceRequestId);
     }
 }

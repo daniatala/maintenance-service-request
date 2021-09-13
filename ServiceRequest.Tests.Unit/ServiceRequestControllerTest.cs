@@ -1,3 +1,4 @@
+using System;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using ServiceRequest.Controllers;
@@ -5,7 +6,13 @@ using ServiceRequest.DataAccess;
 using ServiceRequest.DataAccess.Interfaces;
 using ServiceRequest.Services;
 using ServiceRequest.Services.Interfaces;
+using ServiceRequest.DataModel.Enums;
+using ServiceRequest.DataModel;
 using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
+using ServiceRequest.AutoMapper;
+using ServiceRequest.ViewModels;
 using Xunit;
 
 namespace ServiceRequest.Tests.Unit
@@ -19,7 +26,10 @@ namespace ServiceRequest.Tests.Unit
         {
             _serviceRequestRepository = new ServiceRequestRepository();
             IServiceRequestService serviceRequestService = new ServiceRequestService(_serviceRequestRepository);
-            _serviceRequestController = new ServiceRequestController(serviceRequestService);
+            IMapper mapper = new Mapper(new MapperConfiguration(cfg => {
+                cfg.AddProfile<AutoMapperProfile>();
+            }));
+            _serviceRequestController = new ServiceRequestController(serviceRequestService, mapper);
         }
 
         [Fact]
@@ -39,8 +49,10 @@ namespace ServiceRequest.Tests.Unit
         public void Get_WithServiceRequests_ShouldReturn200StatusCode()
         {
             //Arrange
-            const string serviceRequest1 = "Service Request 1";
-            const string serviceRequest2 = "Service Request 2";
+            var serviceRequest1 = new ServiceRequestModel(Guid.NewGuid(), "A1", "Roof repair", CurrentStatus.Created, "John", DateTime.Now.AddDays(-2), "John",
+                DateTime.Now.AddDays(-1));
+            var serviceRequest2 = new ServiceRequestModel(Guid.NewGuid(), "B2", "Power outage", CurrentStatus.Created, "Marie", DateTime.Now.AddDays(-2), "Marie",
+                DateTime.Now.AddDays(-1));
             _serviceRequestRepository.Add(serviceRequest1);
             _serviceRequestRepository.Add(serviceRequest2);
 
@@ -50,17 +62,17 @@ namespace ServiceRequest.Tests.Unit
             //Asserts
             response.Should().NotBeNull();
             response.Should().BeOfType<OkObjectResult>();
-            var serviceRequests = (IList<string>)((OkObjectResult)response).Value;
-            serviceRequests.Should().HaveCount(2);
-            serviceRequests.Should().Contain(serviceRequest1);
-            serviceRequests.Should().Contain(serviceRequest2);
+            var receivedServiceRequests = (IList<ServiceRequestModelResponse>)((OkObjectResult)response).Value;
+            receivedServiceRequests.Should().HaveCount(2);
+            receivedServiceRequests.First(sr => sr.Id == serviceRequest1.Id).Should().BeEquivalentTo(serviceRequest1);
+            receivedServiceRequests.First(sr => sr.Id == serviceRequest2.Id).Should().BeEquivalentTo(serviceRequest2);
         }
 
         [Fact]
         public void GetById_WithOutServiceRequests_ShouldReturn404StatusCode()
         {
             //Arrange
-            const long invalidServiceRequestId = 1;
+            var invalidServiceRequestId = Guid.NewGuid();
 
             //Act
             var response = _serviceRequestController.Get(invalidServiceRequestId);
@@ -68,6 +80,28 @@ namespace ServiceRequest.Tests.Unit
             //Asserts
             response.Should().NotBeNull();
             response.Should().BeOfType<NotFoundResult>();
+        }
+
+        [Fact]
+        public void GetById_WithServiceRequest_ShouldReturn200StatusCodeAndSingleServiceRequest()
+        {
+            //Arrange
+            var serviceRequest1 = new ServiceRequestModel(Guid.NewGuid(), "A1", "Roof repair", CurrentStatus.Created, "John", DateTime.Now.AddDays(-2), "John",
+                DateTime.Now.AddDays(-1));
+            var serviceRequest2 = new ServiceRequestModel(Guid.NewGuid(), "B2", "Power outage", CurrentStatus.Created, "Marie", DateTime.Now.AddDays(-2), "Marie",
+                DateTime.Now.AddDays(-1));
+            _serviceRequestRepository.Add(serviceRequest1);
+            _serviceRequestRepository.Add(serviceRequest2);
+
+            //Act
+            var response = _serviceRequestController.Get(serviceRequest1.Id);
+
+            //Asserts
+            response.Should().NotBeNull();
+            response.Should().BeOfType<OkObjectResult>();
+            var receivedServiceRequest = (ServiceRequestModelResponse)((OkObjectResult)response).Value;
+            receivedServiceRequest.Should().NotBeNull();
+            receivedServiceRequest.Should().BeEquivalentTo(serviceRequest1);
         }
     }
 }

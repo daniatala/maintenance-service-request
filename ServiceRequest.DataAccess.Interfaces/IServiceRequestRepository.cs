@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ServiceRequest.DataModel;
 
 namespace ServiceRequest.DataAccess.Interfaces
 {
     public interface IServiceRequestRepository
     {
-        void Add(string serviceRequest);
-        IList<string> GetAll();
+        void Add(ServiceRequestModel serviceRequest);
+        IList<ServiceRequestModel> GetAll();
+        ServiceRequestModel GetById(Guid serviceRequestId);
     }
 }

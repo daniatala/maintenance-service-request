@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using ServiceRequest.DataAccess.Interfaces;
+using ServiceRequest.DataModel;
 using ServiceRequest.Services.Interfaces;
 
 namespace ServiceRequest.Services
@@ -13,9 +15,14 @@ namespace ServiceRequest.Services
             _serviceRequestRepository = serviceRequestRepository;
         }
 
-        public IList<string> GetAll()
+        public IList<ServiceRequestModel> GetAll()
         {
             return _serviceRequestRepository.GetAll();
+        }
+
+        public ServiceRequestModel GetById(Guid serviceRequestId)
+        {
+            return _serviceRequestRepository.GetById(serviceRequestId);
         }
     }
 }

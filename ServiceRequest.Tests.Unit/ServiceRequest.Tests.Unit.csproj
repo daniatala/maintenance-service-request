@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ServiceRequest.DataAccess.Interfaces\ServiceRequest.DataAccess.Interfaces.csproj" />
     <ProjectReference Include="..\ServiceRequest.DataAccess\ServiceRequest.DataAccess.csproj" />
+    <ProjectReference Include="..\ServiceRequest.DataModel\ServiceRequest.DataModel.csproj" />
     <ProjectReference Include="..\ServiceRequest.Services.Interfaces\ServiceRequest.Services.Interfaces.csproj" />
     <ProjectReference Include="..\ServiceRequest.Services\ServiceRequest.Services.csproj" />
     <ProjectReference Include="..\ServiceRequest\ServiceRequest.csproj" />
