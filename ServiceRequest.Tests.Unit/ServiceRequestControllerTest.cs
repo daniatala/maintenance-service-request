@@ -33,12 +33,12 @@ namespace ServiceRequest.Tests.Unit
         }
 
         [Fact]
-        public void Get_WithOutServiceRequests_ShouldReturn204StatusCode()
+        public void GetAll_WithOutServiceRequests_ShouldReturn204StatusCode()
         {
             //Arrange
 
             //Act
-            var response = _serviceRequestController.Get();
+            var response = _serviceRequestController.GetAll();
 
             //Asserts
             response.Should().NotBeNull();
@@ -46,7 +46,7 @@ namespace ServiceRequest.Tests.Unit
         }
 
         [Fact]
-        public void Get_WithServiceRequests_ShouldReturn200StatusCode()
+        public void GetAll_WithServiceRequests_ShouldReturn200StatusCode()
         {
             //Arrange
             var serviceRequest1 = new ServiceRequestModel(Guid.NewGuid(), "A1", "Roof repair", CurrentStatus.Created, "John", DateTime.Now.AddDays(-2), "John",
@@ -57,7 +57,7 @@ namespace ServiceRequest.Tests.Unit
             _serviceRequestRepository.Add(serviceRequest2);
 
             //Act
-            var response = _serviceRequestController.Get();
+            var response = _serviceRequestController.GetAll();
 
             //Asserts
             response.Should().NotBeNull();
@@ -75,7 +75,7 @@ namespace ServiceRequest.Tests.Unit
             var invalidServiceRequestId = Guid.NewGuid();
 
             //Act
-            var response = _serviceRequestController.Get(invalidServiceRequestId);
+            var response = _serviceRequestController.GetById(invalidServiceRequestId);
 
             //Asserts
             response.Should().NotBeNull();
@@ -94,7 +94,7 @@ namespace ServiceRequest.Tests.Unit
             _serviceRequestRepository.Add(serviceRequest2);
 
             //Act
-            var response = _serviceRequestController.Get(serviceRequest1.Id);
+            var response = _serviceRequestController.GetById(serviceRequest1.Id);
 
             //Asserts
             response.Should().NotBeNull();

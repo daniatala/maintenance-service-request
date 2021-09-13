@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using ServiceRequest.DataModel.Enums;
 
 namespace ServiceRequest.ViewModels
@@ -17,12 +18,23 @@ namespace ServiceRequest.ViewModels
             LastModifiedDate = lastModifiedDate;
         }
 
-        public string BuildingCode { get; }
-        public string Description { get; }
+        public ServiceRequestModelRequest()
+        {
+            
+        }
+
+        [JsonProperty("buildingCode")]
+        public string BuildingCode { get; set; }
+        [JsonProperty("description")]
+        public string Description { get; set; }
         public CurrentStatus CurrentStatus { get; }
-        public string CreatedBy { get; }
-        public DateTime CreatedDate { get; }
-        public string LastModifiedBy { get; }
-        public DateTime LastModifiedDate { get; }
+        [JsonProperty("createdBy")]
+        public string CreatedBy { get; set; }
+        [JsonProperty("createdDate")]
+        public DateTime CreatedDate { get; set; }
+        [JsonProperty("lastModifiedBy")]
+        public string LastModifiedBy { get; set; }
+        [JsonProperty("lastModifiedDate")]
+        public DateTime LastModifiedDate { get; set; }
     }
 }

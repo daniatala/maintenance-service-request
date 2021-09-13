@@ -22,8 +22,8 @@ namespace ServiceRequest.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public IActionResult Get()
+        [HttpGet(Name = "GetAll")]
+        public IActionResult GetAll()
         {
             var serviceRequest = _serviceRequestService.GetAll();
             if (serviceRequest.Any())
@@ -31,21 +31,23 @@ namespace ServiceRequest.Controllers
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpGet("{id}" ,Name = "GetById")]
         [Route("{id}")]
-        public IActionResult Get(Guid serviceRequestId)
+        public IActionResult GetById([FromRoute] Guid id)
         {
-            var serviceRequest = _serviceRequestService.GetById(serviceRequestId);
+            var serviceRequest = _serviceRequestService.GetById(id);
             if (serviceRequest != null)
                 return Ok(_mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(serviceRequest));
             return NotFound();
         }
 
         [HttpPost]
-        public IActionResult Post(ServiceRequestModelRequest newServiceRequest)
+        public IActionResult Post([FromBody] ServiceRequestModelRequest newServiceRequest)
         {
             var serviceRequest = _serviceRequestService.Add(_mapper.Map<ServiceRequestModelRequest, ServiceRequestModel>(newServiceRequest));
-            return CreatedAtRoute("api/serviceRequest", _mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(serviceRequest));
+            var serviceRequestModelResponse = _mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(serviceRequest);
+            return CreatedAtRoute("GetById", new {id = serviceRequest.Id.ToString("N")},
+                serviceRequestModelResponse);
         }
 
         [HttpPut]
