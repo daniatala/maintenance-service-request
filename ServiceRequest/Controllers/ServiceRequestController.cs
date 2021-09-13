@@ -47,5 +47,13 @@ namespace ServiceRequest.Controllers
             var requestService = _serviceRequestService.Add(_mapper.Map<ServiceRequestModelRequest, ServiceRequestModel>(newServiceRequest));
             return CreatedAtRoute("api/serviceRequest", _mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(requestService));
         }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Put([FromRoute(Name = "id")] Guid serviceRequestId, [FromBody] ServiceRequestModelRequest modifiedServiceRequest)
+        {
+            var requestService = _serviceRequestService.Update(serviceRequestId, _mapper.Map<ServiceRequestModelRequest, ServiceRequestModel>(modifiedServiceRequest));
+            return Ok(_mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(requestService));
+        }
     }
 }

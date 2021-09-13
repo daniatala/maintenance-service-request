@@ -33,5 +33,15 @@ namespace ServiceRequest.DataAccess
         {
             return _serviceRequestsList.FirstOrDefault(sr => sr.Id == serviceRequestId);
         }
+
+        public ServiceRequestModel Update(Guid serviceRequestId, ServiceRequestModel modifiedServiceRequest)
+        {
+            var serviceRequest = _serviceRequestsList.FirstOrDefault(sr => sr.Id == serviceRequestId);
+            _serviceRequestsList.Remove(serviceRequest);
+            _serviceRequestsList.Add(new ServiceRequestModel(serviceRequestId, modifiedServiceRequest.BuildingCode,
+                modifiedServiceRequest.Description, modifiedServiceRequest.CurrentStatus, modifiedServiceRequest.CreatedBy,
+                modifiedServiceRequest.CreatedDate, modifiedServiceRequest.LastModifiedBy, modifiedServiceRequest.LastModifiedDate));
+            return GetById(serviceRequestId);
+        }
     }
 }

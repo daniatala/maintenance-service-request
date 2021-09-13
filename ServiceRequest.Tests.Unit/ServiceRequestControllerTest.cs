@@ -127,5 +127,34 @@ namespace ServiceRequest.Tests.Unit
             receivedServiceRequest.LastModifiedBy.Should().Be(newServiceRequest.LastModifiedBy);
             receivedServiceRequest.LastModifiedDate.Should().Be(newServiceRequest.LastModifiedDate);
         }
+
+        [Fact]
+        public void Put_WithExistingServiceRequest_ShouldReturn200StatusCode()
+        {
+            //Arrange
+            var serviceRequestId = Guid.NewGuid();
+            var serviceRequest1 = new ServiceRequestModel(serviceRequestId, "A1", "Roof repair", CurrentStatus.Created, "John", DateTime.Now.AddDays(-2), "John",
+                DateTime.Now.AddDays(-1));
+            _serviceRequestRepository.Add(serviceRequest1);
+            var modifiedServiceRequest = new ServiceRequestModelRequest("B2", "Roof repair", CurrentStatus.Complete, "Marie", DateTime.Now.AddDays(-20), "Marie",
+                DateTime.Now.AddDays(-1));
+
+            //Act
+            var response = _serviceRequestController.Put(serviceRequestId, modifiedServiceRequest);
+
+            //Asserts
+            response.Should().NotBeNull();
+            response.Should().BeOfType<OkObjectResult>();
+            var receivedServiceRequest = (ServiceRequestModelResponse)((OkObjectResult)response).Value;
+            receivedServiceRequest.Should().NotBeNull();
+            receivedServiceRequest.Id.Should().Be(serviceRequestId);
+            receivedServiceRequest.BuildingCode.Should().Be(modifiedServiceRequest.BuildingCode);
+            receivedServiceRequest.CreatedBy.Should().Be(modifiedServiceRequest.CreatedBy);
+            receivedServiceRequest.CreatedDate.Should().Be(modifiedServiceRequest.CreatedDate);
+            receivedServiceRequest.CurrentStatus.Should().Be(modifiedServiceRequest.CurrentStatus);
+            receivedServiceRequest.Description.Should().Be(modifiedServiceRequest.Description);
+            receivedServiceRequest.LastModifiedBy.Should().Be(modifiedServiceRequest.LastModifiedBy);
+            receivedServiceRequest.LastModifiedDate.Should().Be(modifiedServiceRequest.LastModifiedDate);
+        }
     }
 }

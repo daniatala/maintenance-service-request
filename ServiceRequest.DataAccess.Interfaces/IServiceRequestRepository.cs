@@ -9,5 +9,6 @@ namespace ServiceRequest.DataAccess.Interfaces
         Guid Add(ServiceRequestModel serviceRequest);
         IList<ServiceRequestModel> GetAll();
         ServiceRequestModel GetById(Guid serviceRequestId);
+        ServiceRequestModel Update(Guid serviceRequestId, ServiceRequestModel modifiedServiceRequest);
     }
 }

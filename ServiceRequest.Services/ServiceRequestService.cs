@@ -29,5 +29,10 @@ namespace ServiceRequest.Services
         {
             return _serviceRequestRepository.GetById(_serviceRequestRepository.Add(serviceRequest));
         }
+
+        public ServiceRequestModel Update(Guid serviceRequestId, ServiceRequestModel modifiedServiceRequest)
+        {
+            return _serviceRequestRepository.Update(serviceRequestId, modifiedServiceRequest);
+        }
     }
 }
