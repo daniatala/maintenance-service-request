@@ -1,16 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\ServiceRequest.DataAccess.Interfaces\ServiceRequest.DataAccess.Interfaces.csproj" />
     <ProjectReference Include="..\ServiceRequest.Services.Interfaces\ServiceRequest.Services.Interfaces.csproj" />
   </ItemGroup>
-
 
 </Project>
