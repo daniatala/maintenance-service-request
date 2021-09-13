@@ -4,6 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ServiceRequest.AutoMapper;
+using ServiceRequest.DataAccess;
+using ServiceRequest.DataAccess.Interfaces;
+using ServiceRequest.Services;
+using ServiceRequest.Services.Interfaces;
 
 namespace ServiceRequest
 {
@@ -21,6 +25,8 @@ namespace ServiceRequest
         {
             services.AddControllers();
             services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddTransient<IServiceRequestService, ServiceRequestService>();
+            services.AddSingleton<IServiceRequestRepository, ServiceRequestRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

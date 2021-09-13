@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceRequest.DataAccess.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceRequest.DataAccess", "ServiceRequest.DataAccess\ServiceRequest.DataAccess.csproj", "{E8BAE766-A54C-473A-8D57-D11589E6524D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceRequest.DataModel", "ServiceRequest.DataModel\ServiceRequest.DataModel.csproj", "{4FFAA9A5-E5CB-452A-8551-9BF21ABD5293}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceRequest.DataModel", "ServiceRequest.DataModel\ServiceRequest.DataModel.csproj", "{4FFAA9A5-E5CB-452A-8551-9BF21ABD5293}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceRequest.Tests.Integration", "ServiceRequest.Tests.Integration\ServiceRequest.Tests.Integration.csproj", "{94ECD201-764E-4035-A907-209FADC08542}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{4FFAA9A5-E5CB-452A-8551-9BF21ABD5293}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FFAA9A5-E5CB-452A-8551-9BF21ABD5293}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FFAA9A5-E5CB-452A-8551-9BF21ABD5293}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94ECD201-764E-4035-A907-209FADC08542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94ECD201-764E-4035-A907-209FADC08542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94ECD201-764E-4035-A907-209FADC08542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94ECD201-764E-4035-A907-209FADC08542}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
