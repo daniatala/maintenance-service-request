@@ -36,7 +36,8 @@ namespace ServiceRequest.DataAccess
 
         public ServiceRequestModel Update(Guid serviceRequestId, ServiceRequestModel modifiedServiceRequest)
         {
-            var serviceRequest = _serviceRequestsList.FirstOrDefault(sr => sr.Id == serviceRequestId);
+            var serviceRequest = GetById(serviceRequestId);
+            if (serviceRequest == null) return null;
             _serviceRequestsList.Remove(serviceRequest);
             _serviceRequestsList.Add(new ServiceRequestModel(serviceRequestId, modifiedServiceRequest.BuildingCode,
                 modifiedServiceRequest.Description, modifiedServiceRequest.CurrentStatus, modifiedServiceRequest.CreatedBy,

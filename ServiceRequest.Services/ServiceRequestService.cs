@@ -32,7 +32,7 @@ namespace ServiceRequest.Services
 
         public ServiceRequestModel Update(Guid serviceRequestId, ServiceRequestModel modifiedServiceRequest)
         {
-            return _serviceRequestRepository.Update(serviceRequestId, modifiedServiceRequest);
+            return _serviceRequestRepository.GetById(serviceRequestId) == null ? null : _serviceRequestRepository.Update(serviceRequestId, modifiedServiceRequest);
         }
     }
 }

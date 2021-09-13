@@ -156,5 +156,21 @@ namespace ServiceRequest.Tests.Unit
             receivedServiceRequest.LastModifiedBy.Should().Be(modifiedServiceRequest.LastModifiedBy);
             receivedServiceRequest.LastModifiedDate.Should().Be(modifiedServiceRequest.LastModifiedDate);
         }
+
+        [Fact]
+        public void Put_WithOutServiceRequests_ShouldReturn404StatusCode()
+        {
+            //Arrange
+            var serviceRequestId = Guid.NewGuid();
+            var modifiedServiceRequest = new ServiceRequestModelRequest("B2", "Roof repair", CurrentStatus.Complete, "Marie", DateTime.Now.AddDays(-20), "Marie",
+                DateTime.Now.AddDays(-1));
+
+            //Act
+            var response = _serviceRequestController.Put(serviceRequestId, modifiedServiceRequest);
+
+            //Asserts
+            response.Should().NotBeNull();
+            response.Should().BeOfType<NotFoundResult>();
+        }
     }
 }

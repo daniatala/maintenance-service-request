@@ -25,9 +25,9 @@ namespace ServiceRequest.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var requestService = _serviceRequestService.GetAll();
-            if (requestService.Any())
-                return Ok(_mapper.Map<IList<ServiceRequestModel>, IList<ServiceRequestModelResponse>>(requestService));
+            var serviceRequest = _serviceRequestService.GetAll();
+            if (serviceRequest.Any())
+                return Ok(_mapper.Map<IList<ServiceRequestModel>, IList<ServiceRequestModelResponse>>(serviceRequest));
             return NoContent();
         }
 
@@ -35,25 +35,27 @@ namespace ServiceRequest.Controllers
         [Route("{id}")]
         public IActionResult Get(Guid serviceRequestId)
         {
-            var requestService = _serviceRequestService.GetById(serviceRequestId);
-            if (requestService != null)
-                return Ok(_mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(requestService));
+            var serviceRequest = _serviceRequestService.GetById(serviceRequestId);
+            if (serviceRequest != null)
+                return Ok(_mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(serviceRequest));
             return NotFound();
         }
 
         [HttpPost]
         public IActionResult Post(ServiceRequestModelRequest newServiceRequest)
         {
-            var requestService = _serviceRequestService.Add(_mapper.Map<ServiceRequestModelRequest, ServiceRequestModel>(newServiceRequest));
-            return CreatedAtRoute("api/serviceRequest", _mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(requestService));
+            var serviceRequest = _serviceRequestService.Add(_mapper.Map<ServiceRequestModelRequest, ServiceRequestModel>(newServiceRequest));
+            return CreatedAtRoute("api/serviceRequest", _mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(serviceRequest));
         }
 
         [HttpPut]
         [Route("{id}")]
         public IActionResult Put([FromRoute(Name = "id")] Guid serviceRequestId, [FromBody] ServiceRequestModelRequest modifiedServiceRequest)
         {
-            var requestService = _serviceRequestService.Update(serviceRequestId, _mapper.Map<ServiceRequestModelRequest, ServiceRequestModel>(modifiedServiceRequest));
-            return Ok(_mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(requestService));
+            var serviceRequest = _serviceRequestService.Update(serviceRequestId, _mapper.Map<ServiceRequestModelRequest, ServiceRequestModel>(modifiedServiceRequest));
+            if(serviceRequest != null)
+                return Ok(_mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(serviceRequest));
+            return NotFound();
         }
     }
 }
