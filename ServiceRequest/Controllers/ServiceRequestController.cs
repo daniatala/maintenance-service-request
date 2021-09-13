@@ -23,5 +23,11 @@ namespace ServiceRequest.Controllers
                 return Ok(requestService);
             return NoContent();
         }
+
+        [HttpGet]
+        public IActionResult Get(long serviceRequestId)
+        {
+            return NotFound();
+        }
     }
 }

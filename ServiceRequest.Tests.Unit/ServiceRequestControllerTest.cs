@@ -55,5 +55,19 @@ namespace ServiceRequest.Tests.Unit
             serviceRequests.Should().Contain(serviceRequest1);
             serviceRequests.Should().Contain(serviceRequest2);
         }
+
+        [Fact]
+        public void GetById_WithOutServiceRequests_ShouldReturn404StatusCode()
+        {
+            //Arrange
+            const long invalidServiceRequestId = 1;
+
+            //Act
+            var response = _serviceRequestController.Get(invalidServiceRequestId);
+
+            //Asserts
+            response.Should().NotBeNull();
+            response.Should().BeOfType<NotFoundResult>();
+        }
     }
 }
