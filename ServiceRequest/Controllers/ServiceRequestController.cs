@@ -40,5 +40,12 @@ namespace ServiceRequest.Controllers
                 return Ok(_mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(requestService));
             return NotFound();
         }
+
+        [HttpPost]
+        public IActionResult Post(ServiceRequestModelRequest newServiceRequest)
+        {
+            var requestService = _serviceRequestService.Add(_mapper.Map<ServiceRequestModelRequest, ServiceRequestModel>(newServiceRequest));
+            return CreatedAtRoute("api/serviceRequest", _mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(requestService));
+        }
     }
 }

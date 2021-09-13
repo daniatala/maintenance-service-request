@@ -15,6 +15,7 @@ namespace ServiceRequest.AutoMapper
         public AutoMapperProfile()
         {
             CreateMap<ServiceRequestModel, ServiceRequestModelResponse>();
+            CreateMap<ServiceRequestModelRequest, ServiceRequestModel>();
         }
     }
 

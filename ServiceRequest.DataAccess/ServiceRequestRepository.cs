@@ -15,9 +15,13 @@ namespace ServiceRequest.DataAccess
             _serviceRequestsList = new List<ServiceRequestModel>();
         }
 
-        public void Add(ServiceRequestModel serviceRequest)
+        public Guid Add(ServiceRequestModel serviceRequest)
         {
-            _serviceRequestsList.Add(serviceRequest);
+            var serviceRequestId = serviceRequest.Id == Guid.Empty ? Guid.NewGuid() : serviceRequest.Id;
+            _serviceRequestsList.Add(new ServiceRequestModel(serviceRequestId, serviceRequest.BuildingCode,
+                serviceRequest.Description, serviceRequest.CurrentStatus, serviceRequest.CreatedBy,
+                serviceRequest.CreatedDate, serviceRequest.LastModifiedBy, serviceRequest.LastModifiedDate));
+            return serviceRequestId;
         }
 
         public IList<ServiceRequestModel> GetAll()

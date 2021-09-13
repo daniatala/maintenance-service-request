@@ -6,7 +6,7 @@ namespace ServiceRequest.DataAccess.Interfaces
 {
     public interface IServiceRequestRepository
     {
-        void Add(ServiceRequestModel serviceRequest);
+        Guid Add(ServiceRequestModel serviceRequest);
         IList<ServiceRequestModel> GetAll();
         ServiceRequestModel GetById(Guid serviceRequestId);
     }

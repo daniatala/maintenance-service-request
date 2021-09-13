@@ -18,13 +18,18 @@ namespace ServiceRequest.DataModel
             LastModifiedDate = lastModifiedDate;
         }
 
+        public ServiceRequestModel()
+        {
+            
+        }
+
         public Guid Id { get; }
-        public string BuildingCode { get; }
-        public string Description { get; }
-        public CurrentStatus CurrentStatus { get; }
-        public string CreatedBy { get; }
-        public DateTime CreatedDate { get; }
-        public string LastModifiedBy { get; }
-        public DateTime LastModifiedDate { get; }
+        public string BuildingCode { get; private set; }
+        public string Description { get; private set; }
+        public CurrentStatus CurrentStatus { get; private set; }
+        public string CreatedBy { get; private set; }
+        public DateTime CreatedDate { get; private set; }
+        public string LastModifiedBy { get; private set; }
+        public DateTime LastModifiedDate { get; private set; }
     }
 }

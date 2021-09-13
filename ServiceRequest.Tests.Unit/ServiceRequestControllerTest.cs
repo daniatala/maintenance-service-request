@@ -103,5 +103,29 @@ namespace ServiceRequest.Tests.Unit
             receivedServiceRequest.Should().NotBeNull();
             receivedServiceRequest.Should().BeEquivalentTo(serviceRequest1);
         }
+
+        [Fact]
+        public void Post_NewServiceRequest_ShouldReturn201StatusCodeAndServiceRequestWithId()
+        {
+            //Arrange
+            var newServiceRequest = new ServiceRequestModelRequest("A1", "Roof repair", CurrentStatus.Created, "John", DateTime.Now.AddDays(-2), "John",
+                DateTime.Now.AddDays(-1));
+
+            //Act
+            var response = _serviceRequestController.Post(newServiceRequest);
+
+            //Asserts
+            response.Should().NotBeNull();
+            response.Should().BeOfType<CreatedAtRouteResult>();
+            var receivedServiceRequest = (ServiceRequestModelResponse)((CreatedAtRouteResult)response).Value;
+            receivedServiceRequest.Should().NotBeNull();
+            receivedServiceRequest.BuildingCode.Should().Be(newServiceRequest.BuildingCode);
+            receivedServiceRequest.CreatedBy.Should().Be(newServiceRequest.CreatedBy);
+            receivedServiceRequest.CreatedDate.Should().Be(newServiceRequest.CreatedDate);
+            receivedServiceRequest.CurrentStatus.Should().Be(newServiceRequest.CurrentStatus);
+            receivedServiceRequest.Description.Should().Be(newServiceRequest.Description);
+            receivedServiceRequest.LastModifiedBy.Should().Be(newServiceRequest.LastModifiedBy);
+            receivedServiceRequest.LastModifiedDate.Should().Be(newServiceRequest.LastModifiedDate);
+        }
     }
 }

@@ -24,5 +24,10 @@ namespace ServiceRequest.Services
         {
             return _serviceRequestRepository.GetById(serviceRequestId);
         }
+
+        public ServiceRequestModel Add(ServiceRequestModel serviceRequest)
+        {
+            return _serviceRequestRepository.GetById(_serviceRequestRepository.Add(serviceRequest));
+        }
     }
 }
