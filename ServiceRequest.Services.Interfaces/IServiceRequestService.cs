@@ -10,5 +10,6 @@ namespace ServiceRequest.Services.Interfaces
         ServiceRequestModel GetById(Guid serviceRequestId);
         ServiceRequestModel Add(ServiceRequestModel serviceRequest);
         ServiceRequestModel Update(Guid serviceRequestId, ServiceRequestModel serviceRequest);
+        void Delete(Guid serviceRequestId);
     }
 }

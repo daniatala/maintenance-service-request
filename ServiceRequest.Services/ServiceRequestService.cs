@@ -34,5 +34,10 @@ namespace ServiceRequest.Services
         {
             return _serviceRequestRepository.GetById(serviceRequestId) == null ? null : _serviceRequestRepository.Update(serviceRequestId, modifiedServiceRequest);
         }
+
+        public void Delete(Guid serviceRequestId)
+        {
+            _serviceRequestRepository.Delete(serviceRequestId);
+        }
     }
 }

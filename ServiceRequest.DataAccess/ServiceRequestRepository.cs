@@ -44,5 +44,10 @@ namespace ServiceRequest.DataAccess
                 modifiedServiceRequest.CreatedDate, modifiedServiceRequest.LastModifiedBy, modifiedServiceRequest.LastModifiedDate));
             return GetById(serviceRequestId);
         }
+
+        public void Delete(Guid serviceRequestId)
+        {
+            _serviceRequestsList.Remove(GetById(serviceRequestId));
+        }
     }
 }

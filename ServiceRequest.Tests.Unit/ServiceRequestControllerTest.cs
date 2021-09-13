@@ -172,5 +172,21 @@ namespace ServiceRequest.Tests.Unit
             response.Should().NotBeNull();
             response.Should().BeOfType<NotFoundResult>();
         }
+
+        [Fact]
+        public void Delete_WithServiceRequest_ShouldReturn200StatusCode()
+        {
+            //Arrange
+            var serviceRequest = new ServiceRequestModel(Guid.NewGuid(), "A1", "Roof repair", CurrentStatus.Created, "John", DateTime.Now.AddDays(-2), "John",
+                DateTime.Now.AddDays(-1));
+            _serviceRequestRepository.Add(serviceRequest);
+
+            //Act
+            var response = _serviceRequestController.Delete(serviceRequest.Id);
+
+            //Asserts
+            response.Should().NotBeNull();
+            response.Should().BeOfType<OkResult>();
+        }
     }
 }

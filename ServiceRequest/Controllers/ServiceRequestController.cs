@@ -57,5 +57,13 @@ namespace ServiceRequest.Controllers
                 return Ok(_mapper.Map<ServiceRequestModel, ServiceRequestModelResponse>(serviceRequest));
             return NotFound();
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete(Guid serviceRequestId)
+        {
+            _serviceRequestService.Delete(serviceRequestId);
+            return Ok();
+        }
     }
 }
