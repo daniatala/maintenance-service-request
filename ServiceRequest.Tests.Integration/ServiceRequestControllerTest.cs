@@ -61,5 +61,26 @@ namespace ServiceRequest.Tests.Integration
             receivedServiceRequest.LastModifiedBy.Should().Be(serviceRequest.LastModifiedBy);
             receivedServiceRequest.LastModifiedDate.Should().Be(serviceRequest.LastModifiedDate);
         }
+
+        [Fact]
+        public async void Delete03_WithServiceRequests_ShouldReturn200StatusCode()
+        {
+            //Arrange
+            var client = _server.HttpClient;
+
+            var serviceRequest = new ServiceRequestModelRequest("A1", "Roof repair", CurrentStatus.Created, "John", DateTime.Now.AddDays(-2), "John",
+                DateTime.Now.AddDays(-1));
+
+            var stringContent = new StringContent(JsonConvert.SerializeObject(serviceRequest), Encoding.UTF8,
+                "application/json");
+            var postResponse = await client.PostAsync("https://localhost:44317/api/servicerequest", stringContent);
+            var createdServiceRequest = postResponse.Content.ReadAsAsync<ServiceRequestModelResponse>().Result;
+
+            //Act
+            var response = await client.DeleteAsync($"https://localhost:44317/api/servicerequest/{createdServiceRequest.Id}");
+
+            //Asserts
+            Assert.True(response.StatusCode.Equals(HttpStatusCode.OK));
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace ServiceRequest.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete(Guid serviceRequestId)
+        public IActionResult Delete([FromRoute(Name = "id")] Guid serviceRequestId)
         {
             _serviceRequestService.Delete(serviceRequestId);
             return Ok();
